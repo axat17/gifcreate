@@ -1,0 +1,109 @@
+<html>
+<head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src='gifshot-master/src/gifshot.js'></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+
+ <script>
+ var arr = [];
+ var inte;
+ var dowmloadLink;
+$(document).ready(function() {
+  if (window.File && window.FileList && window.FileReader) {
+    $("#files").on("change", function(e) {
+      var files = e.target.files,
+        filesLength = files.length;
+      for (var i = 0; i < filesLength; i++) {
+        var f = files[i]
+        var fileReader = new FileReader();
+        fileReader.onload = (function(e) {
+          var file = e.target;
+          arr.push(e.target.result);          
+          $("<span class=\"pip\">" +
+            "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+            "<br/><span class=\"remove\">Remove image</span>" +
+            "</span>").insertAfter("#files");
+          $(".remove").click(function(){
+            $(this).parent(".pip").remove();
+            arr.pop(e.target.result);          
+          });
+          
+        });
+        fileReader.readAsDataURL(f);
+      }
+    });
+  } else {
+    alert("Your browser doesn't support to File API")
+  }
+});
+
+function setinterval(){
+  inte=document.getElementById("txtInte").value;
+  if(inte === null || inte === 0 || inte==='' || inte.trim().length===0){
+    //Default Value for
+    inte=0.1;
+  }
+}
+
+
+
+
+
+
+function abc(){
+
+gifshot.createGIF({
+    gifWidth: 200,
+    gifHeight: 200,
+    images: arr,
+    interval: inte,
+    numFrames: 10,
+    frameDuration: 1,
+    fontWeight: 'normal',
+    fontSize: '16px',
+    fontFamily: 'sans-serif',
+    fontColor: '#ffffff',
+    textAlign: 'center',
+    textBaseline: 'bottom',
+    sampleInterval: 10,
+    numWorkers: 2
+}, function (obj) {
+    if (!obj.error) {
+        var image = obj.image, animatedImage = document.createElement('img');
+        downloadLink=image;
+        animatedImage.src = image;
+        document.body.appendChild(animatedImage);
+    }
+});
+
+}
+
+</script>
+
+</head>
+
+<style>
+
+input[type="file"] {
+  display: block;
+}
+
+.pip {
+  display: inline-block;
+  margin: 10px 10px 0 0;
+}
+
+
+</style>
+
+
+<div class="field" align="left">
+  <h3>Upload your images</h3>
+  <input type="file" id="files" name="files[]" multiple />
+</div>
+<input type="number" id="txtInte" value="Enter time Intervel" onblur="if (this.value == '') {this.value = 'Enter time Intervel';}"
+ onfocus="if (this.value == 'Enter time Intervel') {this.value = '';}"  onchange="setinterval()" /> 
+<button onclick="abc()">Create Gif</button>
+<a href=>Download</a>
+</html>

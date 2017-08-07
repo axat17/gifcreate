@@ -1,0 +1,40 @@
+input[type="file"] {
+    display: block;
+    padding-left: 37%;
+}
+
+h3{
+	text-align: center;
+}
+
+.imageThumb {
+    max-height: 130px;
+    border: 0px solid;
+    padding: 7px;
+    cursor: pointer;
+}
+
+.remove:hover {
+    /* background: black; */
+    color: black;
+}
+
+.remove {
+    display: block;
+    /* background: #444; */
+    /* border: 1px solid black; */
+    color: black;
+    text-align: center;
+    cursor: pointer;
+}
+
+#txtInte{
+	margin-left: 37%;
+}
+
+img {
+    float: left;
+    margin-top: 5%;
+    margin-left: 40%;
+    border: 2px solid red;
+}
